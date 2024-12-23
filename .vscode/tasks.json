@@ -1,0 +1,18 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Compile LaTeX",
+        "type": "shell",
+        "command": "bash",
+        "args": [
+          "./compile.sh",
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+      }
+    ]
+  }
+  
