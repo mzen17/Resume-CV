@@ -24,8 +24,7 @@ jobs:
 
     - name: Format PDFs to be of proper name
       run: |
-        mv tmp.pdf resume.pdf
-        mv resume.pdf anon-resume.pdf
+        mv tmp.pdf anon-resume.pdf
 
     - name: Upload PDFs as artifacts
       uses: actions/upload-artifact@v3
@@ -53,6 +52,7 @@ jobs:
       run: |
         RELEASE_TITLE=$(cat RELEASE.txt)
         echo "Release Title: $RELEASE_TITLE"
+        git tag -l "$RELEASE_TITLE" && git tag -d "$RELEASE_TITLE"
         git config --global user.email "mzeng1417@gmail.com"
         git config --global user.name "Mike Zeng"
         git tag -a "$RELEASE_TITLE" -m "$RELEASE_TITLE"
