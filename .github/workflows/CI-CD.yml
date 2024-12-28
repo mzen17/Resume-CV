@@ -16,6 +16,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Install TeX Live
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive-full
+
     - name: Run compile.sh to generate PDFs
       run: |
         chmod +x compile.sh
@@ -33,6 +38,19 @@ jobs:
         path: |
           resume.pdf
           anon-resume.pdf
+  
+  release:
+    runs-on: ubuntu-latest  # Raw runner with git
+    needs: build  # This job will only run after the 'build' job succeeds
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: pdfs
 
     - name: Create Release
       id: create_release
