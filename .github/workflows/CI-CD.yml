@@ -61,7 +61,7 @@ jobs:
 
     - name: Upload PDFs to Release
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}''
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         RELEASE_TITLE=$(cat RELEASE.txt)
         gh release create "$RELEASE_TITLE" "Resume-${RELEASE_TITLE}J.pdf" "AnonResume-${RELEASE_TITLE}J.pdf" \
