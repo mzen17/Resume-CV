@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: pandoc/latex:ubuntu-latest
+      image: pandoc/latex:latest-ubuntu
 
     steps:
     - name: Checkout code
