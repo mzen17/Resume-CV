@@ -62,6 +62,7 @@ jobs:
     - name: Upload PDFs to Release
       uses: softprops/action-gh-release@v2
       with:
+        tag_name: "$RELEASE_TITLE"
         files: |
           Resume-${RELEASE_TITLE}J.pdf
           AnonResume-${RELEASE_TITLE}J.pdf
