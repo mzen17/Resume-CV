@@ -52,7 +52,6 @@ jobs:
       run: |
         RELEASE_TITLE=$(cat RELEASE.txt)
         echo "Release Title: $RELEASE_TITLE"
-        echo "RELEASE=$RELEASE_TITLE" >> $GITHUB_ENV
         git config --global user.email "mzeng1417@gmail.com"
         git config --global user.name "Mike Zeng"
         git tag -a "$RELEASE_TITLE" -m "$RELEASE_TITLE"
@@ -61,11 +60,11 @@ jobs:
         mv anon-resume.pdf "AnonResume-${RELEASE_TITLE}J.pdf"
 
     - name: Upload PDFs to Release
-      uses: softprops/action-gh-release@v2
-      with:
-        tag_name: "${{ env.RELEASE_TITLE }}"
-        files: |
-          Resume-${{ env.RELEASE_TITLE }}.pdf
-          AnonResume-${{ env.RELEASE_TITLE }}.pdf
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}''
+      runs: |
+        RELEASE_TITLE=$(cat RELEASE.txt)
+        gh release create "$RELEASE_TITLE" "Resume-${RELEASE_TITLE}J.pdf" "AnonResume-${RELEASE_TITLE}J.pdf" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="$RELEASE_TITLE" \
+              --generate-notes
