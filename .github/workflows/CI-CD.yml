@@ -60,7 +60,7 @@ jobs:
         mv anon-resume.pdf "AnonResume-${RELEASE_TITLE}J.pdf"
 
     - name: Upload PDFs to Release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         files: |
           Resume-${RELEASE_TITLE}J.pdf
