@@ -1,0 +1,56 @@
+name: TeX Compilation and Release
+
+on:
+  push:
+    branches:
+      - main  # Adjust if your default branch is not 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install TeX Live
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive-full
+
+    - name: Run compile.sh to generate PDFs
+      run: |
+        chmod +x compile.sh
+        ./compile.sh
+
+    - name: Format PDFs to be of proper name
+      run: |
+        mv tmp.pdf resume.pdf
+        mv resume.pdf anon-resume.pdf
+
+    - name: Upload PDFs as artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: pdfs
+        path: |
+          resume.pdf
+          anon-resume.pdf
+
+    - name: Create Release
+      id: create_release
+      run: |
+        RELEASE_TITLE=$(cat RELEASE.txt)
+        echo "Release Title: $RELEASE_TITLE"
+        git tag -a "$RELEASE_TITLE" -m "$RELEASE_TITLE"
+        git push origin --tags
+        mv resume.pdf "Resume-${RELEASE_TITLE}J.pdf"
+        mv anon-resume.pdf "AnonResume-${RELEASE_TITLE}J.pdf"
+
+    - name: Upload PDFs to Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          Resume-${RELEASE_TITLE}J.pdf
+          AnonResume-${RELEASE_TITLE}J.pdf
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
