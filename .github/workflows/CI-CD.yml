@@ -9,6 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    container:
+      image: pandoc/latex:ubuntu-latest
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
