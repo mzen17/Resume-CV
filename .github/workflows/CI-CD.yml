@@ -56,6 +56,7 @@ jobs:
         git config --global user.email "mzeng1417@gmail.com"
         git config --global user.name "Mike Zeng"
         git tag -a "$RELEASE_TITLE" -m "$RELEASE_TITLE"
+        ls -l
         git push origin --tags
         mv resume.pdf "Resume-${RELEASE_TITLE}J.pdf"
         mv anon-resume.pdf "AnonResume-${RELEASE_TITLE}J.pdf"
